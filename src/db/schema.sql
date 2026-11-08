@@ -1,0 +1,35 @@
+CREATE TABLE IF NOT EXISTS locations (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  description TEXT,
+  parent_id INTEGER REFERENCES locations(id) ON DELETE SET NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  description TEXT,
+  sku TEXT UNIQUE,
+  category TEXT NOT NULL,
+  quantity INTEGER NOT NULL DEFAULT 1,
+  condition TEXT NOT NULL DEFAULT 'good',
+  estimated_value REAL,
+  location_id INTEGER NOT NULL REFERENCES locations(id) ON DELETE RESTRICT,
+  tags TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS item_audit_logs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  item_id INTEGER NOT NULL,
+  action TEXT NOT NULL,
+  details TEXT NOT NULL,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_items_category ON items(category);
+CREATE INDEX IF NOT EXISTS idx_items_location ON items(location_id);
+CREATE INDEX IF NOT EXISTS idx_items_sku ON items(sku);
