@@ -38,7 +38,7 @@ Designed for makers, collectors, and hobbyists who want to keep track of their t
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/shelfkeep.git
+   git clone https://github.com/WillFelisberto/shelfkeep.git
    cd shelfkeep
    ```
 
